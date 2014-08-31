@@ -149,7 +149,7 @@ public class MatchPrefix extends Configured implements Tool
                 reporter.incrCounter("Brush", "nodes", 1);
                 //slide the K-mer windows for each read in both strands
                 int end = node.len() - K;
-                for (int i = 1; i < end; i++)
+                for (int i = 1; i < end; i++)	
                 {
                     String window_tmp = node.str().substring(i,   i+K);
                     String window_tmp_r = Node.rc(window_tmp);

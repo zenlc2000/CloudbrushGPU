@@ -1,0 +1,72 @@
+<tool id="CloudBrush" name="CloudBrush" version="1.0.0">
+  <description>de novo genome assembler based on  MapReduce framework</description>
+  <command interpreter="python">CloudBrush_wrap.py '$__root_dir__'/tools/cloudbrush/ '$input_file' '$output_file' '$slots' '$__user_id__' '$readlen' '$k'</command>
+  <inputs>
+    <param name="input_file" type="data" format="sfq" label="Input" /> 
+    <param label="ReadLength" name="readlen" type="select" help="length of reads">
+      <option value="36">36</option>
+      <option value="76">76</option>
+      <option value="101">101</option>
+      <option value="150">150</option>
+    </param>
+    <param label="K" name="k" type="select" help="length of overlap">
+      <option value="21">21</option>
+      <option value="41">41</option>
+      <option value="51">51</option>
+      <option value="75">75</option>
+    </param>
+    <param label="Slots" name="slots" type="select" help="number of nodes">
+      <option value="10">10</option>
+      <option value="20">20</option>
+      <option value="30">30</option>
+      <option value="40">40</option>
+      <option value="50">50</option>
+      <option value="60">60</option>
+      <option value="70" selected="yes">70</option>
+    </param>
+  </inputs>
+  <outputs>
+    <data name="output_file" format="fasta" />
+  </outputs>
+  <tests>
+    <!-- basic test -->
+    <test>
+      <param name="input_file" value="sanger_full_range_original_sanger.fastqsanger" ftype="fastqsanger" />
+      <output name="output_file" file="fastq_to_fasta_python_1.out" />
+    </test>
+    <!-- color space test -->
+    <test>
+      <param name="input_file" value="sanger_full_range_as_cssanger.fastqcssanger" ftype="fastqcssanger" />
+      <output name="output_file" file="fastq_to_fasta_python_2.out" />
+    </test>
+    <!-- test of ignoring invalid score values: this input has ascii characters falling outside of illumina range, but they should not matter -->
+    <test>
+      <param name="input_file" value="sanger_full_range_original_sanger.fastqsanger" ftype="fastqillumina" />
+      <output name="output_file" file="fastq_to_fasta_python_1.out" />
+    </test>
+  </tests>
+  <help>
+**What it does**
+
+CloudBrush is a de novo genome assembler based on the string graph and mapreduce framework, it is released under Apache License 2.0 (http://www.apache.org/licenses/LICENSE-2.0) as a Free and Open Source Software Project.
+
+Using local hadoop cluster to perform CloudBrush:
+
+  1. upload input to HDFS (local hadoop cluster)
+  
+  2. perform CloudRS using local hadoop cluster
+  
+  3. perform CloudBrush using local hadoop cluster
+  
+  4. download output from HDFS (local hadoop cluster)
+
+More details about CloudBrush Project you can get under: https://github.com/ice91/CloudBrush
+
+------
+
+**Citation**
+
+Yu-Jung Chang, Chien-Chih Chen, Chuen-Liang Chen and Jan-Ming Ho, "De Novo Next Generation Genomic Sequence Assembler Based on String Graph and MapReduce Cloud Computing Framework," BMC Genomics, volume 13, number Suppl 7, pages S28, December 2012.
+
+  </help>
+</tool>

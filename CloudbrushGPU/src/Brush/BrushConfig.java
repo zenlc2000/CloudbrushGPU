@@ -82,6 +82,9 @@ public class BrushConfig {
 	public static String RUN_STATS = null;
 	public static long  N50_TARGET = -1;
 	public static String CONVERT_FA = null;
+	
+	// GPU
+	public static boolean USE_GPU = false;
 
     public static void validateConfiguration()
 	{
@@ -195,6 +198,8 @@ public class BrushConfig {
 		BrushAssembler.msg("N50_TARGET = " + N50_TARGET + "\n");
 
 		BrushAssembler.msg("CONVERT_FA = " + CONVERT_FA + "\n");
+		
+		BrushAssembler.msg("USE_GPU = " + USE_GPU + "\n");
 
 		BrushAssembler.msg("\n");
 
@@ -271,6 +276,9 @@ public class BrushConfig {
 		
 		//convert
 		options.addOption(OptionBuilder.withArgName("dir").hasArg().withDescription("convert fa").create("convert_fa"));
+		
+		// GPU
+		options.addOption(OptionBuilder.withArgName("gpu").hasArg().withDescription("use gpu").create("usegpu"));
         
         CommandLineParser parser = new GnuParser();
 
@@ -397,6 +405,8 @@ public class BrushConfig {
             if (line.hasOption("run_stats"))    { RUN_STATS = line.getOptionValue("run_stats"); }
 	        
 	        if (line.hasOption("convert_fa"))   { CONVERT_FA = line.getOptionValue("convert_fa"); }
+	        
+	        if (line.hasOption("usegpu")) { USE_GPU = true; }
         }
 	    catch( ParseException exp )
 	    {

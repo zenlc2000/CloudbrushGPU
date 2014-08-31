@@ -19,6 +19,8 @@ import java.util.Map;
 //import java.util.Set;
 
 
+
+
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.conf.Configured;
 import org.apache.hadoop.fs.FileSystem;
@@ -41,10 +43,19 @@ import org.apache.hadoop.util.Tool;
 import org.apache.hadoop.util.ToolRunner;
 import org.apache.log4j.Logger;
 
+import edu.syr.pcpratts.rootbeer.runtime.Kernel;
+import edu.syr.pcpratts.rootbeer.runtime.Rootbeer;
+
 
 public class VerifyOverlap extends Configured implements Tool
 {
 	private static final Logger sLogger = Logger.getLogger(VerifyOverlap.class);
+	private static boolean USE_GPU;
+
+	public VerifyOverlap(boolean gpu) {
+		// TODO Auto-generated constructor stub
+		USE_GPU = gpu;
+	}
 
 	public static int _min2(int a, int b)
 	{
@@ -107,26 +118,35 @@ public class VerifyOverlap extends Configured implements Tool
         {
 			Node node = new Node();
 			node.fromNodeMsg(nodetxt.toString());
+			
+			if (!USE_GPU) {
+				for (String key : Node.edgetypes)
+				{
+	                /// modify ... 01/15
+					//String key = "r" + adj;
+	                List<String> edges = node.getEdges(key);
+	                if (edges != null)
+	                {
+	                    for(int i = 0; i < edges.size(); i++){
+	                        String [] vals = edges.get(i).split("!");
+	                        String edge_id = vals[0];
+	                        String oval_size = vals[1];
+	                        //String con = Node.flip_dir(adj) + "f";
+	                        String con = Node.flip_link(key);
+	                        output.collect(new Text(edge_id), new Text(Node.OVALMSG + "\t" + node.getNodeId() + "\t" + node.str_raw() + "\t" + con + "\t" + oval_size));
+	                        //\\// emit reverse edge
+	                        //output.collect(new Text(edge_id), new Text(Node.OVALMSG + "\t" + node.getNodeId() + "\t" + node.str_raw() + "\t" + key + "\t" + oval_size));
+	                    }
+	
+	                }
+				}
+			}
+			else {
+			    Kernel jobs = new VerifyOverlapGPU(output, node);
 
-			for (String key : Node.edgetypes)
-			{
-                /// modify ... 01/15
-				//String key = "r" + adj;
-                List<String> edges = node.getEdges(key);
-                if (edges != null)
-                {
-                    for(int i = 0; i < edges.size(); i++){
-                        String [] vals = edges.get(i).split("!");
-                        String edge_id = vals[0];
-                        String oval_size = vals[1];
-                        //String con = Node.flip_dir(adj) + "f";
-                        String con = Node.flip_link(key);
-                        output.collect(new Text(edge_id), new Text(Node.OVALMSG + "\t" + node.getNodeId() + "\t" + node.str_raw() + "\t" + con + "\t" + oval_size));
-                        //\\// emit reverse edge
-                        //output.collect(new Text(edge_id), new Text(Node.OVALMSG + "\t" + node.getNodeId() + "\t" + node.str_raw() + "\t" + key + "\t" + oval_size));
-                    }
-
-                }
+			     Rootbeer rootbeer = new Rootbeer();
+			     rootbeer.runAll(jobs);
+//			     return ret;
 			}
 //            List<String> emit_node = new ArrayList<String>();
             output.collect(new Text(node.getNodeId()), new Text(node.toNodeMsg()));
@@ -398,7 +418,7 @@ public class VerifyOverlap extends Configured implements Tool
 
 	public static void main(String[] args) throws Exception
 	{
-		int res = ToolRunner.run(new Configuration(), new VerifyOverlap(), args);
+		int res = ToolRunner.run(new Configuration(), new VerifyOverlap(BrushConfig.USE_GPU), args);
 		System.exit(res);
 	}
 }

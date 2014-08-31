@@ -310,7 +310,7 @@ public class BrushAssembler extends Configured implements Tool
     
      // build Overlap graph
 	///////////////////////////////////////////////////////////////////////////
-    public void buildOverlap(String inputPath, String basePath, String preprocess, String overlap, String hkmerlist) throws Exception
+    public void buildOverlap(String inputPath, String basePath, String preprocess, String overlap, String hkmerlist, boolean USE_GPU) throws Exception
 	{
         RunningJob job;
         //long trans_edge = 0;
@@ -322,7 +322,7 @@ public class BrushAssembler extends Configured implements Tool
         long hkmer = counter(job, "hkmer");
         msg(" " +  hkmer + " HKmer_skip\n" );
         start("\n  Verify Overlap");
-        VerifyOverlap vo = new VerifyOverlap();
+        VerifyOverlap vo = new VerifyOverlap(USE_GPU);
         job = vo.run(basePath + preprocess + ".prefix", basePath + preprocess + ".vo");
         end(job);
         start("\n  Generate Reverse Edges");
@@ -835,7 +835,7 @@ public class BrushAssembler extends Configured implements Tool
             // Build overlap graph
             if (runStage("buildOverlap"))
 			{
-				buildOverlap(BrushConfig.hadoopReadPath, BrushConfig.hadoopTmpPath, preprocess, overlap, stopwords);
+				buildOverlap(BrushConfig.hadoopReadPath, BrushConfig.hadoopTmpPath, preprocess, overlap, stopwords, BrushConfig.USE_GPU);
 				computeStats(BrushConfig.hadoopTmpPath, overlap);
 				checkDone();
 			}

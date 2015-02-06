@@ -38,7 +38,7 @@ def main():
     k.set_contents_from_filename(jar_path + 'ReadStackCorrector.jar')
     #k.key = 'CloudBrush.jar'
     k.key = 'CloudbrushGPU.jar'
-    k.set_contents_from_filename(jar_path + 'CloudbrushGPU.jar')
+    k.set_contents_from_filename(jar_path + 'CloudbrushGPU-GPU.jar')
 
     # uploading file parallel
     #k.key = s3_in
@@ -50,11 +50,11 @@ def main():
 
     #k.key = s3_out
     #k.delete()
-    # connect to EMR
+    # connect to EMR    InstanceGroup(nodes, 'CORE', 'c1.xlarge', 'ON_DEMAND', 'core-spot@0.4', '0.4')
     emr_conn = EmrConnection(aws_access, aws_secert)
     instance_groups = [
         InstanceGroup(1, 'MASTER', 'm1.medium', 'ON_DEMAND', 'master-spot@0.4', '0.4'),
-        InstanceGroup(nodes, 'CORE', 'c1.xlarge', 'ON_DEMAND', 'core-spot@0.4', '0.4')
+        InstanceGroup(nodes, 'CORE', 'g2.2xlarge', 'ON_DEMAND', 'core-spot@0.4', '0.4')
         ]
 
     # perform CloudRS
@@ -64,7 +64,7 @@ def main():
 
     # perform CloudBrush
     step2 = JarStep(name='CloudBrush',
-                   jar='s3n://%s/CloudbrushGPU.jar' % (aws_access.lower()),
+                   jar='s3n://%s/CloudbrushGPU-GPU.jar' % (aws_access.lower()),
                    step_args = ['-reads', s3_out, '-asm', s3_asm, '-readlen', readlen, '-k', kmer, '-slots', slots, '-javaopts', '-Xmx960m'])
 
     # copy from hdfs to S3

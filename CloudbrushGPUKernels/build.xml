@@ -1,0 +1,13 @@
+<project>
+  <target name="clean">
+    <delete dir="build"/>
+  </target>
+  <target name="compile">
+    <mkdir dir="build/classes"/>
+    <javac srcdir="src" destdir="build/classes" classpath="../toolchain/Rootbeer-1.2.4.jar:../CloudbrushGPU/dist/cloudbrush.jar" />
+  </target>
+  <target name="jar" depends="compile">
+    <jar destfile="dist/cloudbrush-kernels.jar" basedir="build/classes">
+    </jar>
+  </target>
+</project>

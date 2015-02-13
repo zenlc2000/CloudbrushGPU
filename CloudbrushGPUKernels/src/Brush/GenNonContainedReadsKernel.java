@@ -11,7 +11,7 @@ import java.util.Map;
 
 import org.trifort.rootbeer.runtime.Kernel;
 
-public class GenNonContainedReadsKernel implements Kernel
+public class GenNonContainedReadsKernel implements Kernel, GenNonContainedReadsKernelInterface
 {
 	String m_msg;
 	String map_key;
@@ -30,6 +30,18 @@ public class GenNonContainedReadsKernel implements Kernel
 		m_msg = msg;
 //		node = n;
 	}
+
+  public String getNodeId(){
+    return nodeId;
+  }
+
+  public KVPair[] getFields(){
+    return fields;
+  }
+
+  public String getMapKey(){
+    return map_key;
+  }
 
 	@Override
 	public void gpuMethod()

@@ -37,7 +37,7 @@ import org.apache.hadoop.util.ToolRunner;
 import org.apache.log4j.Logger;
 import org.trifort.rootbeer.runtime.Kernel;
 import org.trifort.rootbeer.runtime.Rootbeer;
-
+import java.lang.reflect.Constructor;
 
 public class BuildHighKmerList extends Configured implements Tool
 {
@@ -92,7 +92,14 @@ public class BuildHighKmerList extends Configured implements Tool
 					Rootbeer rootbeer = new Rootbeer();
 					for (int i = 0; i < end; i++)
 					{
-						jobs.add( new BuildHighKmerListKernel(node.str(), i, K));
+            try {
+              Class c = Class.forName("Brush.BuildHighKmerListKernel");
+              Constructor<Kernel> ctor = c.getConstructor();
+              Kernel job = ctor.newInstance(node.str(), i, K);
+						  jobs.add(job);
+            } catch(Exception ex){
+              throw new RuntimeException(ex);
+            }
 					}
 					rootbeer.run(jobs);
 				}

@@ -1,0 +1,3 @@
+#!/bin/sh
+
+java -jar ../toolchain/Rootbeer-1.2.4.jar dist/cloudbrush-kernels.jar dist/cloudbrush-kernels-gpu.jar -64bit

@@ -41,6 +41,7 @@ import org.apache.hadoop.util.ToolRunner;
 import org.apache.log4j.Logger;
 import org.trifort.rootbeer.runtime.Kernel;
 import org.trifort.rootbeer.runtime.Rootbeer;
+import java.lang.reflect.Constructor;
 
 public class GenNonContainedReads extends Configured implements Tool
 {
@@ -196,33 +197,38 @@ public class GenNonContainedReads extends Configured implements Tool
 				{
 					String tmp = iter.next().toString();
 					Node n = new Node();
-					m_jobs.add( new GenNonContainedReadsKernel( tmp ) );
-
+          try {
+            Class c = Class.forName("Brush.GenNonContainedReadsKernel");
+            Constructor<Kernel> ctor = c.getConstructor();
+            Kernel job = ctor.newInstance(tmp);
+					  m_jobs.add(job);
+          } catch(Exception ex){
+            throw new RuntimeException(ex);
+          }
 				}
 				Rootbeer rootbeer = new Rootbeer();
 				rootbeer.run( m_jobs );
 				Node node = new Node();
 				
-				for (Kernel l_job : m_jobs)
+				for (Kernel job : m_jobs)
 				{
-					node.setNodeId( ((GenNonContainedReadsKernel) l_job).nodeId );
+          GenNonContainedReadsKernelInterface kernel = (GenNonContainedReadsKernelInterface) job;
+					node.setNodeId(kernel.getNodeId());
 					
-					for (int i = 0; i < ((GenNonContainedReadsKernel) l_job).fields.length; i++ )
+          KVPair[] fields = kernel.getFields();
+          str = new ArrayList(Arrays.asList(fields));
+					for (int i = 0; i < fields.length; i++ )
 					{
-						str = new ArrayList(Arrays.asList( ((GenNonContainedReadsKernel) l_job).fields  ));
-						f.put( ((GenNonContainedReadsKernel) l_job).fields[i].getKey() , str);
+						f.put(fields[i].getKey() , str);
 					}
 					
 					node.setFields( f );
-					nodes_fr.put( ((GenNonContainedReadsKernel) l_job).map_key, node );
-					String[] vals = ((GenNonContainedReadsKernel) l_job).map_key.split("|");
-					if (vals[0].equals( "f" ))
-							{
-							nodes.add( node );
-							}
-					
+					nodes_fr.put(kernel.getMapKey(), node );
+					String[] vals = kernel.getMapKey().split("|");
+					if (vals[0].equals( "f" )){
+					  nodes.add( node );
+					}
 				}
-
 			} // else (USE_GPU)
 
 			// Map<String, Node> Contained_Nodes = new HashMap<String, Node>();

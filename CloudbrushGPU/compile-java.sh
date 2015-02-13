@@ -1,10 +1,4 @@
 #!/bin/bash
 
-#ant compile-java
-
-if [ ! -d "build/classes/rootbeer" ]; then
-	mkdir build/classes/rootbeer
-fi
-
-cp src/Brush/*Kernel.java build/rootbeer/.
-ant jar-java
+ant jar
+java -jar toolchain/pack.jar -mainjar dist/cloudbrush.jar -lib lib/ -destjar dist/cloudbrush-packed.jar

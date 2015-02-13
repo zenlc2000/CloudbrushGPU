@@ -1,296 +1,97 @@
-<project name="CloudbrushGPU" basedir="." default="main">
-	<property name="src.dir" value="src"/> 
+<project>
 
-	<property name="lib" value="lib" />
-	<property name="lib.dir" 			value="${lib}"/>
+    <property name="lib" value="lib" />
+    <property name="lib.dir"            value="${lib}"/>
 
-	<property name="build.dir" 		value="build" />
-	<property name="classes.dir" 	value="${build.dir}/classes" />
-	<property name="jar.dir" 		value="${build.dir}/jar" />
+    <property name="build.dir"      value="build" />
+    <property name="classes.dir"    value="${build.dir}/classes" />
+    <property name="jar.dir"        value="${build.dir}/jar" />
 
-	<property name="main-class"		value="Brush.BrushAssembler" /> 
+    <property name="main-class"     value="Brush.BrushAssembler" /> 
 
-	<property name="output.file" value="CloudbrushGPU" />
-	<property name="output.file-jar" value="${output.file}.jar" />
-	<property name="output.file-gpu-jar" value="${output.file}-GPU.jar" />
+    <property name="output.file" value="CloudbrushGPU" />
+    <property name="output.file-jar" value="${output.file}.jar" />
+    <property name="output.file-gpu-jar" value="${output.file}-GPU.jar" />
 
-	<property name="libjars.gpu" value="${lib}${file.separator}activation-1.1.jar,${lib}${file.separator}ant-contrib-1.0b3.jar,${lib}${file.separator}asm-3.2.jar,${lib}${file.separator}avro-1.7.4.jar,${lib}${file.separator}commons-beanutils-1.7.0.jar,${lib}${file.separator}commons-beanutils-core-1.8.0.jar,${lib}${file.separator}commons-cli-1.2.jar,${lib}${file.separator}commons-codec-1.4.jar,${lib}${file.separator}commons-collections-3.2.1.jar,${lib}${file.separator}commons-compress-1.4.1.jar,${lib}${file.separator}commons-configuration-1.6.jar,${lib}${file.separator}commons-digester-1.8.jar,${lib}${file.separator}commons-el-1.0.jar,${lib}${file.separator}commons-httpclient-3.1.jar,${lib}${file.separator}commons-io-2.4.jar,${lib}${file.separator}commons-lang-2.6.jar,${lib}${file.separator}commons-logging-1.1.3.jar,${lib}${file.separator}commons-math3-3.1.1.jar,${lib}${file.separator}commons-net-3.1.jar,${lib}${file.separator}guava-11.0.2.jar,${lib}${file.separator}hadoop-annotations-2.4.0.jar,${lib}${file.separator}hadoop-auth-2.4.0.jar,${lib}${file.separator}hadoop-common-2.4.0-tests.jar,${lib}${file.separator}hadoop-common-2.4.0.jar,${lib}${file.separator}hadoop-mapreduce-client-app-2.4.0.jar,${lib}${file.separator}hadoop-mapreduce-client-common-2.4.0.jar,${lib}${file.separator}hadoop-mapreduce-client-core-2.4.0.jar,${lib}${file.separator}hadoop-mapreduce-client-hs-2.4.0.jar,${lib}${file.separator}hadoop-mapreduce-client-hs-plugins-2.4.0.jar,${lib}${file.separator}hadoop-mapreduce-client-jobclient-2.4.0-tests.jar,${lib}${file.separator}hadoop-mapreduce-client-jobclient-2.4.0.jar,${lib}${file.separator}hadoop-mapreduce-client-shuffle-2.4.0.jar,${lib}${file.separator}hadoop-mapreduce-examples-2.4.0.jar,${lib}${file.separator}hadoop-nfs-2.4.0.jar,${lib}${file.separator}httpclient-4.2.5.jar,${lib}${file.separator}httpcore-4.2.5.jar,${lib}${file.separator}jackson-core-asl-1.8.8.jar,${lib}${file.separator}jackson-jaxrs-1.8.8.jar,${lib}${file.separator}jackson-mapper-asl-1.8.8.jar,${lib}${file.separator}jackson-xc-1.8.8.jar,${lib}${file.separator}jasper-compiler-5.5.23.jar,${lib}${file.separator}jasper-runtime-5.5.23.jar,${lib}${file.separator}java-xmlbuilder-0.4.jar,${lib}${file.separator}jaxb-api-2.2.2.jar,${lib}${file.separator}jaxb-impl-2.2.3-1.jar,${lib}${file.separator}jersey-core-1.9.jar,${lib}${file.separator}jersey-json-1.9.jar,${lib}${file.separator}jersey-server-1.9.jar,${lib}${file.separator}jets3t-0.9.0.jar,${lib}${file.separator}jettison-1.1.jar,${lib}${file.separator}jetty-6.1.26.jar,${lib}${file.separator}jetty-util-6.1.26.jar,${lib}${file.separator}jsch-0.1.42.jar,${lib}${file.separator}jsp-api-2.1.jar,${lib}${file.separator}jsr305-1.3.9.jar,${lib}${file.separator}junit-4.8.2.jar,${lib}${file.separator}log4j-1.2.17.jar,${lib}${file.separator}mockito-all-1.8.5.jar,${lib}${file.separator}netty-3.6.2.Final.jar,${lib}${file.separator}paranamer-2.3.jar,${lib}${file.separator}protobuf-java-2.5.0.jar,${lib}${file.separator}Rootbeer-1.2.4.jar,${lib}${file.separator}servlet-api-2.5.jar,${lib}${file.separator}snappy-java-1.0.4.1.jar,${lib}${file.separator}stax-api-1.0-2.jar,${lib}${file.separator}xmlenc-0.52.jar,${lib}${file.separator}xz-1.0.jar,${lib}${file.separator}zookeeper-3.4.5.jar,${lib}${file.separator}rootbeer_cuda_x64.so.1" />
+    <property name="rootbeer.path" value="../${root}/rootbeer1" />
+    <property name="rootbeer.version" value="${rootbeer.path}/Rootbeer-1.2.4.jar" />
+    
+ <path id="master-classpath">
+  <fileset dir="lib">
+    <include name="*.jar"/>
+  </fileset>
 
-	<property name="root" value="/Volumes/Passport/git/CloudbrushGPU" />
-	<property name="rootbeer.version" value="${rootbeer.path}/Rootbeer-1.2.4.jar" />
-	<property name="rootbeer" value="${lib.dir}${file.separator}Rootbeer-1.2.4.jar" />
-	<property name="rootbeer.home" value=".rootbeer" />
-<!--	<property name="rootbeer.args" value="" /> -->
-	<property name="rootbeer.java.arg.xmx" value="-Xmx6G" />
-	<property name="rootbeer.path" value="/Volumes/Passport/git/rootbeer1" />
-	
-	<property name="output.file-rb-jar" value="${output.file}-rb.jar" />
-	<property name="output.file-rb-gpu-jar" value="${output.file}-rb-GPU.jar" />
-	<!-- <property name="rootbeer.args" value="-64bit -noexceptions -noarraychecks -shared-mem-size 8192" /> -->
-	<property name="rootbeer.args" value="-64bit -sm_30" />
-
-	<!--
-	<property name="output.file" value="MatrixMultiplication" />
-	<property name="libjars.gpu" value="${lib}${file.separator}mahout-core-0.8-SNAPSHOT-job.jar,${lib}${file.separator}commons-cli-2.0-mahout.jar,${lib}${file.separator}guava-12.0.jar" />
-	<property name="libjars.cpu" value="${lib}${file.separator}mahout-core-0.8-SNAPSHOT-job.jar,${lib}${file.separator}commons-cli-2.0-mahout.jar,${lib}${file.separator}guava-12.0.jar" />
-	<property name="libjars.bench" value="${lib}${file.separator}caliper-1.0-beta-1-all.jar,${lib}${file.separator}hadoop-core-1.3.0-SNAPSHOT.jar,${lib}${file.separator}mahout-core-0.8-SNAPSHOT-job.jar,${lib}${file.separator}commons-cli-2.0-mahout.jar,${lib}${file.separator}commons-logging-1.1.1.jar,${lib}${file.separator}commons-configuration-1.7.jar,${lib}${file.separator}commons-lang-2.6.jar,${lib}${file.separator}log4j-1.2.17.jar" />
-	-->
-
-	<!-- <property name="rootbeer.package.dir" value="at/illecker/hadoop/rootbeer/examples/matrixmultiplication/gpu" /> -->
-	<property name="rootbeer.package.dir" value="Brush" />
-	<!-- <property name="rootbeer.classes" value="VerifyOverlapGPU.class,EdgeRemovalKernel.class" /> -->
-	<property name="rootbeer.classes" value="KVPair.class,GenNonContainedReadsKernel.class" />
-
-<!-- ***** Load ant contrib for Loops and If Tasks ***** -->
-	<taskdef resource="net/sf/antcontrib/antlib.xml">
-		<classpath>
-			<pathelement location="${lib.dir}/ant-contrib-1.0b3.jar" />
-		</classpath>
-	</taskdef>
-
-	<!-- ***** Setting up the master classpath including libs and local build.dir ***** -->
-	<path id="master-classpath">
-		<fileset dir="${lib.dir}">
-			<include name="*.jar" />
-			<exclude name="rootbeer-*.jar" />
-		</fileset>
-		<fileset dir="${lib.dir}">
-			<include name="${rootbeer.version}" />
-		</fileset>
-		<pathelement path="${build.dir}" />
-	</path>
-
-	
-	<path id="classpath">
-		<fileset dir="${lib.dir}"	includes="**/*.jar"/>
-	</path>	
-
-	<!-- ****************************************************************** -->
-	<!-- TARGET CLEAN                                                       -->
-	<!-- ****************************************************************** -->
-	<target name="clean">
-		<delete dir="build" />
-		<delete file="${output.file-jar}" />
-		<delete file="${output.file-bench-jar}" />
-		<delete file="${output.file-gpu-jar}" />
-		<delete file="${output.file-rb-jar}" />
-		<delete file="${output.file-rb-gpu-jar}" />
-	</target>
-
-	<!-- ****************************************************************** -->
-	<!-- TARGET CLEAN ROOTBEER                                              -->
-	<!-- ****************************************************************** -->
-	<target name="clean-rb">
-		<echo>${user.home}</echo>
-		<delete dir="${user.home}/.soot/" />
-		<mkdir dir="${user.home}/.rootbeer_config/" />
-		<copy todir="${user.home}/.rootbeer_config/" file="${user.home}/.rootbeer/config" />
-		<delete dir="${user.home}/.rootbeer/" />
-		<mkdir dir="${user.home}/.rootbeer/" />
-		<copy todir="${user.home}/.rootbeer/" file="${user.home}/.rootbeer_config/config" />
-		<delete dir="${user.home}/.rootbeer_config/" />
-	</target>
+</path>
+    
+    <target name="clean">
+        <delete dir="build"/>
+    </target>
 
 
-	
+    <!-- ****************************************************************** -->
+    <!-- TARGET compile-java                                                -->
+    <!-- Compile non-rootbeer files to classes                              -->
+    <!-- ****************************************************************** -->
+    <target name="compile-java">
+        <mkdir dir="build/classes"/>
+        <javac destdir="build/classes" >
+            <src path="src/Brush"/>
+            <classpath refid="master-classpath"/>
+        </javac>
 
-	<target name="compile">
-		<mkdir dir="${classes.dir}"/>
-		<javac srcdir="${src.dir}" destdir="${build.dir}" classpathref="master-classpath" includeantruntime="false" />
-	</target>
-
-	<target name="jar" depends="compile">
-		<mkdir dir="${jar.dir}"/>
-		<jar destfile="${jar.dir}/${ant.project.name}.jar" basedir="${classes.dir}">
-			<manifest>
-				<attribute name="Main-Class" value="${main-class}"/>
-			</manifest>
-		</jar>
-	</target>
-
-	<target name="run"	depends="jar">
-		<java fork="true" classname="${main-class}">
-			<classpath>
-				<path location="${jar.dir}/${ant.project.name}.jar"/>
-			</classpath>
-		</java>
-	</target>
+    </target>
 
 
-	<target name="clean-build" depends="clean,jar"/>
+    <!-- ****************************************************************** -->
+    <!-- TARGET compile-rootbeer                                            -->
+    <!-- move *Kernel.java files to their own directory then compile        -->
+    <!-- ****************************************************************** -->
+    <target name="compile-rootbeer">
+        <!-- <mkdir dir="build/classes/rootbeer"/> -->
+<!--         <move todir="build/rootbeer">
+            <fileset dir="src/Brush">
+                <include name="**/Kernel.java"/>
+            </fileset>
+        </move>
+ -->    <javac destdir="build/classes/rootbeer">
+            <src path="build/rootbeer"/>
+            <classpath refid="master-classpath"/>
+        </javac>
 
-	<target name="main" depends="clean,run"/>
+    </target>
 
-	
+    <!-- ****************************************************************** -->
+    <!-- PRIVATE TARGET jar-java                                            -->
+    <!-- Building a temp jar including only the non-rootbeer class files    -->
+    <!-- ****************************************************************** -->
+    <target name="jar-java" depends="compile-java">
+        <mkdir dir="dist"/>
+        <!-- <zip destfile="CloudbrushGPU-java-tmp.jar" basedir="build/classes" includes="**/*.class" /> -->
+        <jar destfile="dist/CloudbrushGPU.jar" basedir="build/classes">
+            <manifest>
+                <attribute name="Main-Class" value="Brush.BrushAssembler"/>
+            </manifest>
+        </jar>
+    </target>
 
+    <!-- ****************************************************************** -->
+    <!-- PRIVATE TARGET jar-rootbeer                                              -->
+    <!-- Building a temp jar including only the rootbeer kernel             -->
+    <!-- ****************************************************************** -->
+    <target name="jar-rootbeer" depends="compile-rootbeer">
+        <jar destfile="dist/gpu.jar" basedir="build/classes/rootbeer"/>
+    </target>
 
-	<!-- ****************************************************************** -->
-	<!-- PRIVATE TARGET jar-rb                                              -->
-	<!-- Building a temp jar including only the rootbeer kernel             -->
-	<!-- ****************************************************************** -->
-	<target name="-jar-rb" depends="compile">
-		<var name="i" value="0" />
-		<var name="counter" value="" />
-		<var name="rootbeer.tmp.jars" value="" />
-		<for list="${rootbeer.classes}" param="rootbeer.class">
-			<sequential>
-				<math result="i" operand1="${i}" operation="+" operand2="1" datatype="int" />
-				<echo>Rootbeer Class: ${build.dir}${file.separator}${rootbeer.package.dir}${file.separator}@{rootbeer.class}</echo>
-				<!-- use zip instead of jar, because rootbeer has problems with META-INF/MANIFEST.MF -->
-				<zip destfile="${output.file-rb-jar}_tmp${i}.jar">
-					<zipfileset dir="${build.dir}${file.separator}${rootbeer.package.dir}" includes="@{rootbeer.class}" fullpath="${rootbeer.package.dir}${file.separator}@{rootbeer.class}" />
-				</zip>
-				<if>
-					<equals arg1="${i}" arg2="1" />
-					<else>
-						<var name="rootbeer.tmp.jars" value="${rootbeer.tmp.jars}-libjar ${output.file-rb-jar}_tmp${i}.jar " />
-					</else>
-				</if>
-				<if>
-					<equals arg1="${counter}" arg2="" />
-					<then>
-						<var name="counter" value="${i}" />
-					</then>
-					<else>
-						<var name="counter" value="${counter},${i}" />
-					</else>
-				</if>
-			</sequential>
-		</for>
-		<!-- pack all jars together -->
-		<echo>java -jar ${rootbeer.path}/lib/pack.jar -mainjar ${output.file-rb-jar}_tmp1.jar ${rootbeer.tmp.jars} -destjar ${output.file-rb-jar}</echo>
-		<exec executable="java">
-			<arg value="-jar" />
-			<arg value="${rootbeer.path}/lib/pack.jar" />
-			<arg value="-mainjar" />
-			<arg value="${output.file-rb-jar}_tmp1.jar" />
-			<arg line="${rootbeer.tmp.jars}" />
-			<arg value="-destjar" />
-			<arg value="${output.file-rb-jar}" />
-		</exec>
-		<!-- delete tmp jars -->
-		<for list="${counter}" param="index">
-			<sequential>
-				<echo>Delete ${output.file-rb-jar}_tmp@{index}.jar</echo> 
-				<delete file="${output.file-rb-jar}_tmp@{index}.jar" />
-			</sequential>
-		</for>
-	</target>
-
-	<!-- ****************************************************************** -->
-	<!-- PRIVATE TARGET jar-gpu-combine                                     -->
-	<!-- Combining generated rootbeer jar with outher sources               -->
-	<!-- ****************************************************************** -->
-	<target name="-jar-gpu-combine" depends="compile">
-		<!-- build rootbeer exclude classes -->
-		<var name="rootbeer.exclude.classes" value="" />
-		<for list="${rootbeer.classes}" param="rootbeer.class">
-			<sequential>
-				<if>
-					<equals arg1="${rootbeer.exclude.classes}" arg2="" />
-					<then>
-						<var name="rootbeer.exclude.classes" value="${rootbeer.package.dir}${file.separator}@{rootbeer.class}" />
-					</then>
-					<else>
-						<var name="rootbeer.exclude.classes" value="${rootbeer.exclude.classes},${rootbeer.package.dir}${file.separator}@{rootbeer.class}" />
-					</else>
-				</if>
-			</sequential>
-		</for>
-		<echo>Exclude rootbeer classes: ${rootbeer.exclude.classes}</echo>
-		<!-- set empty if its not available -->
-		<property name="{jar.main.class}" value="" />
-		<jar destfile="${output.file-jar}">
-			<zipfileset dir="${build.dir}" excludes="${rootbeer.exclude.classes}" />
-			<zipgroupfileset dir="." includes="${output.file-rb-gpu-jar}" />
-			<!-- include .rootbeer folder for cudalibs -->
-			<zipfileset dir="${user.home}${file.separator}${rootbeer.home}" prefix="${rootbeer.home}" />
-			<manifest>
-				<attribute name="Main-Class" value="${jar.main.class}" />
-			</manifest>
-		</jar>
-		<echo>Main-Class: ${jar.main.class}</echo>
-		<echo>Included rootbeer folder: ${user.home}${file.separator}${rootbeer.home}</echo>
-	</target>
-
-	<!-- ****************************************************************** -->
-	<!-- TARGET jar-gpu                                                     -->
-	<!--   1) Generate rootbeer jar including only the rootbeer kernel      -->
-	<!--   2) Execute Rootbeer transformation with {rootbeer.arg}           -->
-	<!--   3) Combine rootbeer result jar with other sources                -->
-	<!--   4) Include dependent libs                                        -->
-	<!-- ****************************************************************** -->
-	<target name="jar-gpu" depends="compile">
-		<antcall target="-jar-rb" />
-		<if>
-			<available file="${output.file-rb-jar}" />
-			<else>
-				<fail>File ${output.file-rb-jar} not found!</fail>
-			</else>
-		</if>
-		<var name="rootbeer.args.available" value="${rootbeer.args}" />
-		<for list="rbSharedMemSize rbMaxRegCount" param="rb.arg" delimiter=" ">
-			<sequential>
-				<!-- set empty if its not available -->
-				<property name="@{rb.arg}" value="" />
-				<if>
-					<equals arg1="${@{rb.arg}}" arg2="" />
-					<else>
-						<echo>Rootbeer Argument @{rb.arg}: ${@{rb.arg}}</echo>
-						<if>
-							<equals arg1="${rootbeer.args.available}" arg2="" />
-							<then>
-								<var name="rootbeer.args.available" value="${@{rb.arg}}" />
-							</then>
-							<else>
-								<var name="rootbeer.args.available" value="${rootbeer.args.available} ${@{rb.arg}}" />
-							</else>
-						</if>
-					</else>
-				</if>
-			</sequential>
-		</for>
-		<echo>java ${rootbeer.java.arg.xmx} -jar ${rootbeer} ${output.file-rb-jar} ${output.file-rb-gpu-jar} ${rootbeer.args.available}</echo>
-		<exec executable="java" failonerror="true" resultproperty="return.code">
-			<arg value="${rootbeer.java.arg.xmx}" />
-			<arg value="-jar" />
-			<arg value="${rootbeer}" />
-			<arg value="${output.file-rb-jar}" />
-			<arg value="${output.file-rb-gpu-jar}" />
-			<arg line="${rootbeer.args.available}" />
-		</exec>
-		<fail>
-			<condition>
-				<equals arg1="-1" arg2="${return.code}" />
-			</condition>
-		</fail>
-		<delete file="${output.file-rb-jar}" />
-		<antcall target="-jar-gpu-combine">
-			<param name="jar.main.class" value="${main-class}" />
-		</antcall>
-		<delete file="${output.file-rb-gpu-jar}" />
-		<!-- Default: include libraries, if was not set before-->
-		<property name="jar-gpu.include.libs" value="true" />
-		<if>
-			<equals arg1="${jar-gpu.include.libs}" arg2="true" />
-			<then>
-				<echo>Including lib jars: ${libjars.gpu}</echo>
-				<for list="${libjars.gpu}" param="libjar">
-					<sequential>
-						<echo>jar uf ${output.file-jar} -C ${root} @{libjar}</echo>
-						<exec executable="jar">
-							<arg value="uf" />
-							<arg value="${output.file-jar}" />
-							<arg value="-C" />
-							<arg value="${root}" />
-							<arg value="@{libjar}" />
-						</exec>
-					</sequential>
-				</for>
-			</then>
-		</if>
-		<echo>Rename ${output.file-jar} to ${output.file-gpu-jar}</echo>
-		<move file="${output.file-jar}" tofile="${output.file-gpu-jar}" />
-	</target>
+    <!-- ****************************************************************** -->
+    <!-- TARGET jar                                                         -->
+    <!-- Building a jar with everything in build/classes                    -->
+    <!-- ****************************************************************** -->
+    <target name="jar" depends="compile-rootbeer">
+        <jar destfile="CloudbrushGPU.jar" basedir="build/classes">
+            <manifest>
+                <attribute name="Main-Class" value="Brush.BrushAssembler"/>
+            </manifest>
+        </jar>
+    </target>
 
 </project>

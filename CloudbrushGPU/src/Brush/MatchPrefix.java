@@ -231,13 +231,13 @@ public class MatchPrefix extends Configured implements Tool
 
 		class OvelapSizeComparator implements Comparator<EdgeInfo> {
 			public int compare(EdgeInfo element1, EdgeInfo element2) {
-				EdgeInfo obj1 = (EdgeInfo) element1;
-				EdgeInfo obj2 = (EdgeInfo) element2;
+				EdgeInfo obj1 = element1;
+				EdgeInfo obj2 = element2;
 
-				if ((int) (obj1.overlap_size - obj2.overlap_size) > 0) {
+				if (obj1.overlap_size - obj2.overlap_size > 0) {
 					return -1;
 				}
-				if ((int) (obj1.overlap_size - obj2.overlap_size) < 0) {
+				if (obj1.overlap_size - obj2.overlap_size < 0) {
 					return 1;
 				} else {
 					return 0;

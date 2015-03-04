@@ -241,8 +241,8 @@ public class VerifyOverlap extends Configured implements Tool
 		{
 			Node node = new Node();
 			node.fromNodeMsg( nodetxt.toString() );
-			if ( !USE_GPU )
-			{
+//			if ( !USE_GPU )
+//			{
 				for ( String key : Node.edgetypes )
 				{
 					// / modify ... 01/15
@@ -273,12 +273,12 @@ public class VerifyOverlap extends Configured implements Tool
 				System.out.println( "CPU: <" + node.getNodeId() + ", " + node.toNodeMsg() + ">");
 				output.collect( new Text( node.getNodeId() ), new Text( node.toNodeMsg() ) );
 				reporter.incrCounter( "Brush", "nodes", 1 );
-			}	// if ( !USE_GPU )
-			
-			else
-			{
-				
-			}	// else {USE_GPU}
+//			}	// if ( !USE_GPU )
+//
+//			else
+//			{
+//
+//			}	// else {USE_GPU}
 		}		// map
 
 		// @Override
@@ -370,13 +370,13 @@ public class VerifyOverlap extends Configured implements Tool
 		{
 			public int compare( OverlapInfo element1, OverlapInfo element2 )
 			{
-				OverlapInfo obj1 = (OverlapInfo) element1;
-				OverlapInfo obj2 = (OverlapInfo) element2;
-				if ( (int) ( obj1.overlap_size - obj2.overlap_size ) > 0 )
+				OverlapInfo obj1 = element1;
+				OverlapInfo obj2 = element2;
+				if ( obj1.overlap_size - obj2.overlap_size > 0 )
 				{
 					return -1;
 				}
-				if ( (int) ( obj1.overlap_size - obj2.overlap_size ) < 0 )
+				if ( obj1.overlap_size - obj2.overlap_size < 0 )
 				{
 					return 1;
 				}

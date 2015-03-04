@@ -59,6 +59,7 @@ public class BuildHighKmerList extends Configured implements Tool
 				OutputCollector<Text, IntWritable> output, Reporter reporter)
 						throws IOException
 		{
+            sLogger.info("**************** BuildHighKmerList -- MAPPER ****************");
 			Node node = new Node();
 			node.fromNodeMsg(nodetxt.toString());
 			if (!node.hasCustom("n"))
@@ -88,6 +89,7 @@ public class BuildHighKmerList extends Configured implements Tool
 				} // if !USE_GPU
 				else
 				{
+                    sLogger.info(("**************** BuildHighKmerList - Going to GPU ****************ll"));
 					List<Kernel> jobs = new ArrayList<Kernel>();
 					Rootbeer rootbeer = new Rootbeer();
 					for (int i = 0; i < end; i++)

@@ -4,7 +4,7 @@ package Brush;
 
 import org.trifort.rootbeer.runtime.Kernel;
 
-public class VerifyOverlapGPU implements Kernel {
+public class VerifyOverlapKernel implements Kernel {
 
 	private String[] edges;
 	private String key;
@@ -15,7 +15,7 @@ public class VerifyOverlapGPU implements Kernel {
 	public String[] outKey;
 	public String[] outValue;
 
-	public VerifyOverlapGPU(String[] input, String oval, String id, String raw, String k) {
+	public VerifyOverlapKernel(String[] input, String oval, String id, String raw, String k) {
 		this.edges = input;
 		this.OVALMSG = oval;
 		this.nodeId = id;
@@ -60,7 +60,7 @@ public class VerifyOverlapGPU implements Kernel {
 
 	// Dummy constructor invocation to keep the constructor within the Rootbeer transformation
 	public static void main(String[] args) {
-		new VerifyOverlapGPU(null, null, null, null, null);
+		new VerifyOverlapKernel(null, null, null, null, null);
 	}
 
 }

@@ -71,7 +71,6 @@
 	<classpathentry kind="lib" path="/usr/local/Cellar/hadoop/2.4.0/libexec/share/hadoop/mapreduce/hadoop-mapreduce-client-shuffle-2.4.0.jar"/>
 	<classpathentry kind="lib" path="/usr/local/Cellar/hadoop/2.4.0/libexec/share/hadoop/mapreduce/hadoop-mapreduce-examples-2.4.0.jar"/>
 	<classpathentry kind="lib" path="/Volumes/Passport/DCS/JCuda-All-0.6.0-bin-apple-x86_64/jcuda-0.6.0.jar"/>
-	<classpathentry kind="lib" path="/Volumes/Passport/git/rootbeer1/Rootbeer-1.2.3.jar"/>
-	<classpathentry kind="lib" path="/Volumes/Passport/git/rootbeer1/Rootbeer-1.2.4.jar"/>
+	<classpathentry kind="lib" path="toolchain/Rootbeer-1.2.4.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

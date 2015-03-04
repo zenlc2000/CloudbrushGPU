@@ -172,16 +172,16 @@ public class TransitiveReduction extends Configured implements Tool
 
 		class OvelapSizeComparator_f implements Comparator<OverlapInfo> {
 			public int compare(OverlapInfo element1, OverlapInfo element2) {
-				OverlapInfo obj1 = (OverlapInfo) element1;
-				OverlapInfo obj2 = (OverlapInfo) element2;
+				OverlapInfo obj1 = element1;
+				OverlapInfo obj2 = element2;
 
-				if ((int) (obj1.overlap_size - obj2.overlap_size) > 0) {
+				if (obj1.overlap_size - obj2.overlap_size > 0) {
 					return -1;
 				}
-				if ((int) (obj1.overlap_size - obj2.overlap_size) < 0) {
+				if (obj1.overlap_size - obj2.overlap_size < 0) {
 					return 1;
 				}
-				if ((int) (obj1.overlap_size - obj2.overlap_size) == 0) {
+				if (obj1.overlap_size - obj2.overlap_size == 0) {
 					return 0;
 				}
 				if (obj1.str.length() - obj2.str.length() < 0) {
@@ -205,15 +205,15 @@ public class TransitiveReduction extends Configured implements Tool
 
 		class OvelapSizeComparator_r implements Comparator<OverlapInfo> {
 			public int compare(OverlapInfo element1, OverlapInfo element2) {
-				OverlapInfo obj1 = (OverlapInfo) element1;
-				OverlapInfo obj2 = (OverlapInfo) element2;
-				if ((int) (obj1.overlap_size - obj2.overlap_size) > 0) {
+				OverlapInfo obj1 = element1;
+				OverlapInfo obj2 = element2;
+				if (obj1.overlap_size - obj2.overlap_size > 0) {
 					return -1;
 				}
-				if ((int) (obj1.overlap_size - obj2.overlap_size) < 0) {
+				if (obj1.overlap_size - obj2.overlap_size < 0) {
 					return 1;
 				}
-				if ((int) (obj1.overlap_size - obj2.overlap_size) == 0) {
+				if (obj1.overlap_size - obj2.overlap_size == 0) {
 					return 0;
 				}
 				if (obj1.str.length() - obj2.str.length() < 0) {

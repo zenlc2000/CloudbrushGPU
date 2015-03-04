@@ -1,25 +1,21 @@
 package Brush;
 
-import java.io.IOException;
-import org.trifort.rootbeer.runtime.RootbeerGpu;
-//import Brush.Node;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
 import org.trifort.rootbeer.runtime.Kernel;
+import org.trifort.rootbeer.runtime.RootbeerGpu;
+
+import java.io.IOException;
 
 public class GenNonContainedReadsKernel implements Kernel, GenNonContainedReadsKernelInterface
 {
+
 	String m_msg;
 	String map_key;
 //	Node map_value = new Node();
 //	Node node;
 //	public List< String, List< String >> fields = new ArrayList< String, List< String >>();
 	String nodeId;
-	KVPair[] fields; 
+//	KVPair[] fields;
+    public static final String NODEMSG = "N";
 
 	public GenNonContainedReadsKernel()
 	{
@@ -36,7 +32,7 @@ public class GenNonContainedReadsKernel implements Kernel, GenNonContainedReadsK
   }
 
   public KVPair[] getFields(){
-    return fields;
+    return null; //fields;
   }
 
   public String getMapKey(){
@@ -62,9 +58,9 @@ public class GenNonContainedReadsKernel implements Kernel, GenNonContainedReadsK
 //		String msg = iter.next().toString();
 
 		String[] vals = m_msg.split( "\t" );
-		fields = new KVPair[vals.length];
+//		fields = new KVPair[vals.length];
 
-		if ( vals[ 2 ].equals( Node.NODEMSG ) )
+		if ( vals[ 2 ].equals( NODEMSG ) )
 		{
 //			node = new Node( vals[ 1 ] );
 //			node.setNodeId( vals[1] );
@@ -95,19 +91,19 @@ public class GenNonContainedReadsKernel implements Kernel, GenNonContainedReadsK
 	
 	public String[] mapGet(String key)
 	{
-		for (int i =0; i<fields.length; i++)
-		{
-			if (key.equals( fields[i].getKey() ))
-			{
-				return fields[i].getValues();
-			}
-		}
+//		for (int i =0; i<fields.length; i++)
+//		{
+//			if (key.equals( fields[i].getKey() ))
+//			{
+//				return fields[i].getValues();
+//			}
+//		}
 		return null;
 	}
 	
 	public void parseNodeMsg( String[] items, int offset ) throws IOException
 	{
-		if ( !items[ offset ].equals( Node.NODEMSG ) )
+		if ( !items[ offset ].equals( NODEMSG ) )
 		{
 			throw new IOException( "Unknown code: " + items[ offset ] );
 		}
@@ -132,7 +128,7 @@ public class GenNonContainedReadsKernel implements Kernel, GenNonContainedReadsK
 				if ( lSize == 0 )
 				{
 					//l = new String[items.length];//new ArrayList< String >();
-					fields[fieldSize].setKey( type );
+//					fields[fieldSize].setKey( type );
 					//fields[fieldSize].
 //					fields.put( type, l );
 					fieldSize++;

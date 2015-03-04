@@ -181,16 +181,16 @@ public class PreCorrect extends Configured implements Tool
                 for(int i=0; i < readlist.size(); i++) {
                     if (!readlist.get(i).base.equals(correct_base)) {
                         //\\
-                        if (readlist.get(i).base.equals("A") && (float)base_array[0]/(float)winner_sum > 0.25f){
+                        if (readlist.get(i).base.equals("A") && (float)base_array[0]/ winner_sum > 0.25f){
                             continue;
                         }
-                        if (readlist.get(i).base.equals("T") && (float)base_array[1]/(float)winner_sum > 0.25f){
+                        if (readlist.get(i).base.equals("T") && (float)base_array[1]/ winner_sum > 0.25f){
                             continue;
                         }
-                        if (readlist.get(i).base.equals("C") && (float)base_array[2]/(float)winner_sum > 0.25f){
+                        if (readlist.get(i).base.equals("C") && (float)base_array[2]/ winner_sum > 0.25f){
                             continue;
                         }
-                        if (readlist.get(i).base.equals("G") && (float)base_array[3]/(float)winner_sum > 0.25f){
+                        if (readlist.get(i).base.equals("G") && (float)base_array[3]/ winner_sum > 0.25f){
                             continue;
                         }
                         //\\

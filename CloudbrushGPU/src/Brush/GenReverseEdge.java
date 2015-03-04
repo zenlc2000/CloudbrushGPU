@@ -126,13 +126,13 @@ public class GenReverseEdge extends Configured implements Tool
 
 		class OvelapSizeComparator implements Comparator<OverlapInfo> {
 			public int compare(OverlapInfo element1, OverlapInfo element2) {
-				OverlapInfo obj1 = (OverlapInfo) element1;
-				OverlapInfo obj2 = (OverlapInfo) element2;
+				OverlapInfo obj1 = element1;
+				OverlapInfo obj2 = element2;
 
-				if ((int) (obj1.overlap_size - obj2.overlap_size) > 0) {
+				if (obj1.overlap_size - obj2.overlap_size > 0) {
 					return -1;
 				}
-				if ((int) (obj1.overlap_size - obj2.overlap_size) < 0) {
+				if (obj1.overlap_size - obj2.overlap_size < 0) {
 					return 1;
 				} else {
 					return 0;

@@ -260,7 +260,7 @@ public class FindBubbles extends Configured implements Tool
 
 			public int compareTo(BubbleInfo o)
 			{
-				BubbleInfo co = (BubbleInfo) o;
+				BubbleInfo co = o;
 				return (int)((co.cov - cov)*100);
 			}
 		}

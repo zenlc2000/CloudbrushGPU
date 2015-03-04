@@ -200,7 +200,7 @@ public class PopBubbles extends Configured implements Tool
 			{
 				int merlen = node.len()/* - K + 1*/;
 				float support = node.cov() * merlen + extracov;
-				node.setCoverage((float) support /  (float) merlen);
+				node.setCoverage(support /  (float) merlen);
 			}
 
 			if (links.size() > 0)

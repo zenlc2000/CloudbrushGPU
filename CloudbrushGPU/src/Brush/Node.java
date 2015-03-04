@@ -75,9 +75,9 @@ public class Node
 	public static enum Color
 	{
 		W, G, B, F
-	};
+	}
 
-	static String[] dnachars = { "A", "C", "G", "T" };
+    static String[] dnachars = { "A", "C", "G", "T" };
 	static String[] edgetypes = { "ff", "fr", "rf", "rr" };
 	static String[] dirs = { "f", "r" };
 
@@ -1110,22 +1110,22 @@ public class Node
 	{ // possibly change to Comparator<String>?
 		public int compare( String element1, String element2 )
 		{ // had to change element1 & 2 from Object to String
-			String obj1 = (String) element1;
-			String obj2 = (String) element2;
+			String obj1 = element1;
+			String obj2 = element2;
 			// con + "|" + node_id + "|" + str_raw + "|" + oval_size + "|" + cov + "|"
 			// + end;
 			String[] val1 = obj1.split( "\\|" );
 			String[] val2 = obj2.split( "\\|" );
 
-			if ( (int) ( ( Node.dna2str( val1[ 2 ] ).length() - Integer
+			if ( ( Node.dna2str( val1[ 2 ] ).length() - Integer
 					.parseInt( val1[ 3 ] ) ) - ( Node.dna2str( val2[ 2 ] ).length() - Integer
-					.parseInt( val2[ 3 ] ) ) ) > 0 )
+					.parseInt( val2[ 3 ] ) ) > 0 )
 			{
 				return -1;
 			}
-			if ( (int) ( ( Node.dna2str( val1[ 2 ] ).length() - Integer
+			if ( ( Node.dna2str( val1[ 2 ] ).length() - Integer
 					.parseInt( val1[ 3 ] ) ) - ( Node.dna2str( val2[ 2 ] ).length() - Integer
-					.parseInt( val2[ 3 ] ) ) ) < 0 )
+					.parseInt( val2[ 3 ] ) ) < 0 )
 			{
 				return 1;
 			}
@@ -1140,8 +1140,8 @@ public class Node
 	{ // possibly change to Comparator<String>?
 		public int compare( String element1, String element2 )
 		{
-			String obj1 = (String) element1;
-			String obj2 = (String) element2;
+			String obj1 = element1;
+			String obj2 = element2;
 			// con + "|" + node_id + "|" + str_raw + "|" + oval_size + "|" + cov + "|"
 			// + end;
 			String[] val1 = obj1.split( "\\|" );
@@ -1432,18 +1432,18 @@ public class Node
 		{ // Added <String>
 			public int compare( String element1, String element2 )
 			{ // Changed element1 and 2 to String type
-				String obj1 = (String) element1;
-				String obj2 = (String) element2;
+				String obj1 = element1;
+				String obj2 = element2;
 				// con + "|" + node_id + "|" + str_raw + "|" + oval_size + "|" + cov +
 				// "|" + end;
 				String[] val1 = obj1.split( "!" );
 				String[] val2 = obj2.split( "!" );
 
-				if ( (int) ( val1[ 0 ].length() - val2[ 0 ].length() ) > 0 )
+				if ( val1[ 0 ].length() - val2[ 0 ].length() > 0 )
 				{
 					return -1;
 				}
-				if ( (int) ( val1[ 0 ].length() - val2[ 0 ].length() ) < 0 )
+				if ( val1[ 0 ].length() - val2[ 0 ].length() < 0 )
 				{
 					return 1;
 				}
@@ -1574,18 +1574,18 @@ public class Node
 		{ // added <String>
 			public int compare( String element1, String element2 )
 			{ // Changed element1 and element2 to String type
-				String obj1 = (String) element1;
-				String obj2 = (String) element2;
+				String obj1 = element1;
+				String obj2 = element2;
 				// con + "|" + node_id + "|" + str_raw + "|" + oval_size + "|" + cov +
 				// "|" + end;
 				String[] val1 = obj1.split( "!" );
 				String[] val2 = obj2.split( "!" );
 
-				if ( (int) ( val1[ 0 ].length() - val2[ 0 ].length() ) > 0 )
+				if ( val1[ 0 ].length() - val2[ 0 ].length() > 0 )
 				{
 					return -1;
 				}
-				if ( (int) ( val1[ 0 ].length() - val2[ 0 ].length() ) < 0 )
+				if ( val1[ 0 ].length() - val2[ 0 ].length() < 0 )
 				{
 					return 1;
 				}

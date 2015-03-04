@@ -167,12 +167,12 @@ public class CountBraid extends Configured implements Tool
 
          class EdgeComparator implements Comparator <EdgeInfo>{	//Added <EdgeInfo>
             public int compare(EdgeInfo element1, EdgeInfo element2) { // Changed element1 & 2 to EdgeInfo types
-                EdgeInfo obj1 = (EdgeInfo) element1;
-                EdgeInfo obj2 = (EdgeInfo) element2;
+                EdgeInfo obj1 = element1;
+                EdgeInfo obj2 = element2;
                 //con + "|" + node_id + "|" + str_raw + "|" + oval_size + "|" + cov + "|" + end;
-                if ((int) ( (Node.dna2str(obj1.str).length()-obj1.overlap_size) - (Node.dna2str(obj2.str).length()-obj2.overlap_size) ) > 0) {
+                if ((Node.dna2str(obj1.str).length()-obj1.overlap_size) - (Node.dna2str(obj2.str).length()-obj2.overlap_size) > 0) {
                     return -1;
-                } if  ((int) ( (Node.dna2str(obj1.str).length()-obj1.overlap_size) - (Node.dna2str(obj2.str).length()-obj2.overlap_size) ) == 0) {
+                } if  ((Node.dna2str(obj1.str).length()-obj1.overlap_size) - (Node.dna2str(obj2.str).length()-obj2.overlap_size) == 0) {
                 	return 0;
                 } else {
                     return 1;
@@ -182,16 +182,16 @@ public class CountBraid extends Configured implements Tool
 
         class OvelapSizeComparator implements Comparator <EdgeInfo>{ //Added <EdgeInfo>
         	public int compare(EdgeInfo element1, EdgeInfo element2) {	// Changed element1 & 2 to EdgeInfo types
-        		EdgeInfo obj1 = (EdgeInfo) element1;
-        		EdgeInfo obj2 = (EdgeInfo) element2;
+        		EdgeInfo obj1 = element1;
+        		EdgeInfo obj2 = element2;
         		
-        		if ((int)(obj1.overlap_size - obj2.overlap_size) > 0) {
+        		if (obj1.overlap_size - obj2.overlap_size > 0) {
         			return -1;
         		}  
-        		if ((int)(obj1.overlap_size - obj2.overlap_size) < 0){
+        		if (obj1.overlap_size - obj2.overlap_size < 0){
         			return 1;
         		} 
-        		if ((int)(obj1.overlap_size - obj2.overlap_size) == 0){
+        		if (obj1.overlap_size - obj2.overlap_size == 0){
         			return 0;
         		} 
         		if (obj1.str.length() - obj2.str.length() < 0) {
@@ -219,16 +219,16 @@ public class CountBraid extends Configured implements Tool
         class OvelapSizeComparator_f implements Comparator <EdgeInfo>{	//Added <EdgeInfo>
             public int compare(EdgeInfo element1, EdgeInfo element2) {	// Changed element1 & 2 to EdgeInfo types
                
-            	EdgeInfo obj1 = (EdgeInfo) element1;
-                EdgeInfo obj2 = (EdgeInfo) element2;
+            	EdgeInfo obj1 = element1;
+                EdgeInfo obj2 = element2;
                 
-                if ((int)(obj1.overlap_size - obj2.overlap_size) > 0) {
+                if (obj1.overlap_size - obj2.overlap_size > 0) {
                 	return -1;
                 }  
-                if ((int)(obj1.overlap_size - obj2.overlap_size) < 0){
+                if (obj1.overlap_size - obj2.overlap_size < 0){
                 	return 1;
                 } 
-                if ((int)(obj1.overlap_size - obj2.overlap_size) == 0){
+                if (obj1.overlap_size - obj2.overlap_size == 0){
                 	return 0;
                 } 
                 if (obj1.str.length() - obj2.str.length() < 0) {
@@ -256,16 +256,16 @@ public class CountBraid extends Configured implements Tool
         class OvelapSizeComparator_r implements Comparator <EdgeInfo>{	//Added <EdgeInfo>
             public int compare(EdgeInfo element1, EdgeInfo element2) {	// Changed element1 & 2 to EdgeInfo types
             	
-                EdgeInfo obj1 = (EdgeInfo) element1;
-                EdgeInfo obj2 = (EdgeInfo) element2;
+                EdgeInfo obj1 = element1;
+                EdgeInfo obj2 = element2;
                 
-                if ((int)(obj1.overlap_size - obj2.overlap_size) > 0) {
+                if (obj1.overlap_size - obj2.overlap_size > 0) {
                 	return -1;
                 }  
-                if ((int)(obj1.overlap_size - obj2.overlap_size) < 0){
+                if (obj1.overlap_size - obj2.overlap_size < 0){
                 	return 1;
                 } 
-                if ((int)(obj1.overlap_size - obj2.overlap_size) == 0){
+                if (obj1.overlap_size - obj2.overlap_size == 0){
                 	return 0;
                 } 
 

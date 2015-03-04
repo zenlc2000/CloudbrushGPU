@@ -45,7 +45,7 @@ import org.apache.log4j.FileAppender;
 //import org.apache.log4j.Layout;
 import org.apache.log4j.Level;
 //import org.apache.log4j.Logger;
-//import org.apache.log4j.PropertyConfigurator;
+import org.apache.log4j.PropertyConfigurator;
 import org.apache.log4j.TTCCLayout;
 //import org.apache.log4j.helpers.DateLayout;
 
@@ -784,7 +784,7 @@ public class BrushAssembler extends Configured implements Tool
 	    BrushConfig.validateConfiguration();
 
 		// Setup to use a file appender
-	    BasicConfigurator.resetConfiguration();
+//	    BasicConfigurator.resetConfiguration();
 
 		TTCCLayout lay = new TTCCLayout();
 		lay.setDateFormat("yyyy-mm-dd HH:mm:ss.SSS");
@@ -792,7 +792,9 @@ public class BrushAssembler extends Configured implements Tool
 	    FileAppender fa = new FileAppender(lay, BrushConfig.localBasePath+"brush.details.log", true);
 	    fa.setName("File Appender");
 	    fa.setThreshold(Level.INFO);
-	    BasicConfigurator.configure(fa);
+//	    BasicConfigurator.configure(fa);
+        String log4jConfPath = "lib/log4j.properties";
+        PropertyConfigurator.configure(log4jConfPath);
 
 	    logfile = new FileOutputStream(BrushConfig.localBasePath+"brush.log", true);
 	    logstream = new PrintStream(logfile);
